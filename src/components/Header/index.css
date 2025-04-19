@@ -7,7 +7,7 @@
 }
 
 .nav-head {
-  font-size: 15px;
+  font-size: 25px;
   color: #413e3e;
 }
 
@@ -32,16 +32,73 @@
   background-color: transparent;
 }
 
-.count {
+.header-count-container {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #e93263;
   color: white;
-  background-color: orange;
   position: absolute;
   right: -10px;
   top: -15px;
   padding: 4px;
-  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.count {
+  color: #ffffff !important;
+  text-align: center;
+  margin: 0px;
 }
 
 .navbar a {
   text-decoration: none;
+}
+
+.logout-btn {
+  border: 1px solid #e93263;
+  outline: none;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #e93263;
+  font-weight: 500;
+}
+
+.small-device-logout-btn {
+  display: none;
+}
+
+.nav-right-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 250px;
+}
+
+@media (max-width: 786px) {
+  .nav-right-container {
+    width: 100px;
+    gap: 10px;
+  }
+
+  .logout-btn {
+    display: none;
+    width: 80px;
+    height: 25px;
+  }
+  .small-device-logout-btn {
+    color: #252425;
+    display: block;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
 }

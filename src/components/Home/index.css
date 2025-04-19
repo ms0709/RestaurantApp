@@ -23,8 +23,8 @@
 }
 
 .active {
-  color: orange !important;
-  border-bottom: 2px outset #bfbfbf !important;
+  color: #e93263 !important;
+  border-bottom: 2px outset #e93263 !important;
 }
 
 .loader {

@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import CartContext from '../../CartContext'
 import './index.css'
 
@@ -15,66 +16,88 @@ const FoodItem = ({details}) => {
     addonCat,
     quantity,
   } = details
+  const [itemQuantity, setItemQuantity] = useState(0)
   return (
     <CartContext.Consumer>
       {value => {
         const {cartList, addCart, removeCart} = value
+        console.log(cartList)
 
         const isInclude = cartList.find(each => each.dishId === dishId)
 
         const increment = () => {
-          addCart({...details, quantity: 1})
+          setItemQuantity(prevQuantity => prevQuantity + 1)
+        }
+
+        const onAddToCart = () => {
+          addCart({...details, quantity: itemQuantity})
         }
 
         const decrement = () => {
-          removeCart(dishId)
+          setItemQuantity(prevQuantity =>
+            prevQuantity <= 0 ? 0 : prevQuantity - 1,
+          )
+          if (itemQuantity <= 0) {
+            removeCart(dishId)
+          }
         }
 
         return (
-          <li className='food-item'>
-            <div className='food-details'>
+          <li className="food-item">
+            <div className="food-details">
               <div
                 style={{borderColor: dishType === 2 ? 'green' : 'red'}}
-                className='dish-type'
+                className="dish-type"
               >
                 <div style={{background: dishType === 2 ? 'green' : 'red'}}>
-                  <p className='d-none'></p>
+                  <p className="d-none" />
                 </div>
               </div>
-              <div className='details-card'>
+              <div className="details-card">
                 <h1>{dishName}</h1>
-                <p className='price'>
+                <p className="price">
                   {dishCurrency} {dishPrice}
                 </p>
-                <p className='dish-des'>{dishDescription}</p>
+                <p className="dish-des">{dishDescription}</p>
                 {dishAvailability ? (
-                  <div className='d-flex align-items-center gap-2 my-2'>
-                    <button
-                      onClick={decrement}
-                      className='btn btn-outline-danger'
-                      type='button'
-                    >
-                      -
-                    </button>
-                    <p>{isInclude ? isInclude.quantity : quantity}</p>
-                    <button
-                      onClick={increment}
-                      className='btn btn-outline-success'
-                      type='button'
-                    >
-                      +
-                    </button>
+                  <div className="add-to-cart-container">
+                    <div className="d-flex align-items-center gap-2 my-2 counter-btn-container">
+                      <button
+                        onClick={decrement}
+                        className="count-btn"
+                        type="button"
+                      >
+                        -
+                      </button>
+                      <p>{itemQuantity}</p>
+                      <button
+                        onClick={increment}
+                        className="count-btn"
+                        type="button"
+                      >
+                        +
+                      </button>
+                    </div>
+                    {itemQuantity > 0 && (
+                      <button
+                        type="button"
+                        className="add-to-cart-btn"
+                        onClick={onAddToCart}
+                      >
+                        ADD TO CART
+                      </button>
+                    )}
                   </div>
                 ) : (
-                  <p className='text-danger fs-6'>Not available</p>
+                  <p className="text-danger fs-6">Not available</p>
                 )}
                 {addonCat.length > 0 && (
-                  <p className='custom'>Customizations available</p>
+                  <p className="custom">Customizations available</p>
                 )}
               </div>
             </div>
-            <p className='calory'>{dishCalories} calories</p>
-            <div className='dish-image'>
+            <p className="calory">{dishCalories} calories</p>
+            <div className="dish-image">
               <img src={dishImage} alt={dishName} />
             </div>
           </li>
